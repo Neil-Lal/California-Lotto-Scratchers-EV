@@ -1,0 +1,15 @@
+sys
+native_encoding
+EXPAT_VERSION
+XML_PARAM_ENTITY_PARSING_NEVER
+features
+expat_CAPI
+XMLParserType
+ParserCreate
+XML_PARAM_ENTITY_PARSING_UNLESS_STANDALONE
+model
+XML_PARAM_ENTITY_PARSING_ALWAYS
+ExpatError
+errors
+ErrorString
+version_info

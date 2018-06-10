@@ -11,6 +11,8 @@
     <OutputPath>.</OutputPath>
     <Name>California Lotto Scratchers EV</Name>
     <RootNamespace>California Lotto Scratchers EV</RootNamespace>
+    <InterpreterId>
+    </InterpreterId>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
