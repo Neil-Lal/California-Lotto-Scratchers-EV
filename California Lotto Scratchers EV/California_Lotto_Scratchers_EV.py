@@ -2,6 +2,13 @@ import pypyodbc
 import requests
 from bs4 import BeautifulSoup as bs
 import pandas as pd
+import sqlalchemy
+from datetime import datetime
+
+## Variables
+    # Webpage to scrape
+websites = ["http://www.calottery.com/Play/Scratchers-games/$30-Scratchers/bonus-play-millions-1313"]
+
 
 ## Retrieve Data from Website
     # Start with one game then later on add the rest of the variations
@@ -14,7 +21,7 @@ import pandas as pd
     # http://www.calottery.com/play/scratchers-games/$20-scratchers
     # http://www.calottery.com/play/scratchers-games/$30-scratchers
 
-websites = ["http://www.calottery.com/Play/Scratchers-games/$30-Scratchers/bonus-play-millions-1313"]
+
 for i in websites:
     prizeList = []
     page = requests.get(i)
@@ -29,17 +36,19 @@ for i in websites:
 
 
         if len(cells) > 0:
+            date = datetime.now().strftime("%Y-%m-%d %H:%M")
             prizes = list(cells[0].stripped_strings)[0] 
             odds = list(cells[1].stripped_strings)[0]
             totalWinners = list(cells[2].stripped_strings)[0]
             prizesClaimed = list(cells[3].stripped_strings)[0]
             prizesAvailable = list(cells[4].stripped_strings)[0]
 
-            rows = {'name': name, 'prizes': prizes, 'odds': odds, 'totalWinners': totalWinners, 'prizesClaimed': prizesClaimed, 'prizesAvailable': prizesAvailable}
+            rows = {'date': date,'name': name, 'prizes': prizes, 'odds': odds, 'totalWinners': totalWinners, 'prizesClaimed': prizesClaimed, 'prizesAvailable': prizesAvailable}
             prizeList.append(rows)
 
     df = pd.DataFrame(prizeList)
 
+    print(df.head())
 ##
 
 ## Connect to MSSQL server
