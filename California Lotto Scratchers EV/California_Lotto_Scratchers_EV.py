@@ -73,6 +73,7 @@ def SQL(frames):
 
 def main():
     f = scrapper(websites)
+    print(f[0].head(10))
     SQL(f)
 
 

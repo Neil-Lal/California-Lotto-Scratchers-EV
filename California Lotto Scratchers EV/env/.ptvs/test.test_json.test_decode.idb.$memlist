@@ -1,8 +1,0 @@
-CTest
-PyTest
-TestPyDecode
-StringIO
-TestDecode
-OrderedDict
-decimal
-TestCDecode
