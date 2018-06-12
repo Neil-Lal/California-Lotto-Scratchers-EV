@@ -5,6 +5,11 @@ VisualStudioVersion = 15.0.27130.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "California Lotto Scratchers EV", "California Lotto Scratchers EV\California Lotto Scratchers EV.pyproj", "{02866177-0AC1-42B7-B8D6-4B49068E44E7}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E49AFD26-01F7-42A3-9829-587CF6ABFD4F}"
+	ProjectSection(SolutionItems) = preProject
+		Todo.txt = Todo.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

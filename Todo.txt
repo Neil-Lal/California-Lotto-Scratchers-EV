@@ -1,0 +1,12 @@
+Part 1 - web scrape and loading to SQL
+	*Scrape multiple tickets
+	*Pull ticket price
+	*Decide where to calculate EV
+
+Part 2 - EV calc and optimization
+	*Decide where to store EV
+
+Branch - Texting
+
+Part 3 - App!
+	Kivy?
