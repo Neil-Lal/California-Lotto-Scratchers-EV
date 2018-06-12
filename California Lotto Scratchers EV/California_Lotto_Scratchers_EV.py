@@ -38,38 +38,31 @@ def scrapper(websites):
         for table_row in oddsAndPrizes:
             cells = table_row.findAll('td')
 
-
             if len(cells) > 0:
                 date = datetime.now().strftime("%Y-%m-%d %H:%M")
-                prizes = list(cells[0].stripped_strings)[0] 
-                odds = list(cells[1].stripped_strings)[0]
-                totalWinners = list(cells[2].stripped_strings)[0]
-                prizesClaimed = list(cells[3].stripped_strings)[0]
-                prizesAvailable = list(cells[4].stripped_strings)[0]
+                prizes = list(cells[0].stripped_strings)[0].replace(',','') 
+                odds = list(cells[1].stripped_strings)[0].replace(',','')
+                totalWinners = list(cells[2].stripped_strings)[0].replace(',','')
+                prizesClaimed = list(cells[3].stripped_strings)[0].replace(',','')
+                prizesAvailable = list(cells[4].stripped_strings)[0].replace(',','')
 
-                rows = {'date': date,'name': name, 'prizes': prizes, 'odds': odds, 'totalWinners': totalWinners, 'prizesClaimed': prizesClaimed, 'prizesAvailable': prizesAvailable}
+                rows = {'Extract_Date': date,'Ticket_name': name, 'Prizes': prizes, 'Odds': odds, 'Total_winners': totalWinners, 'Prizes_claimed': prizesClaimed, 'Prizes_available': prizesAvailable}
                 prizeList.append(rows)
 
         frames.append(pd.DataFrame(prizeList))
         sleep(randint(1,4))
     return frames
-        
-##
-
+       
 ## Connect to MSSQL server
     # Takes in list of pandas dataframes
     # No return; Adds data to Scratchers table
 def SQL(frames):
-    conn = pyodbc.connect(r'DSN=sqlNeil')
-    cursor = conn.cursor()
-    query = ("SELECT * FROM Scratchers")
-    cursor.execute(query)
-    results = cursor.fetchone()
-    print(results)
-#engine = sqlalchemy.create_engine('mssql+pypyodbc://DESKTOP-L0JOFBL\TOPSDATA_ME/topsdata_CalLotto')
-#engine.table_names()
+    engine = sqlalchemy.create_engine('mssql+pyodbc://DESKTOP-L0JOFBL\TOPSDATA_ME/topsdata_CalLotto?driver=SQL+Server')
+    for i in frames:
+        i.to_sql(name="Scratchers",con=engine,if_exists='append', index=False)
 
-##
+
+
 
 def main():
     f = scrapper(websites)
