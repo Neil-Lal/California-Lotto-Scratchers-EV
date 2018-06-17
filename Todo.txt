@@ -1,12 +1,21 @@
-Part 1 - web scrape and loading to SQL
-	*Scrape multiple tickets
-	*Pull ticket price
-	*Decide where to calculate EV
-
 Part 2 - EV calc and optimization
-	*Decide where to store EV
+	*Store EV in SQL (view)
 
 Branch - Texting
 
 Part 3 - App!
 	Kivy?
+
+
+
+SQL Structure
+
+Scratcher_Prices
+	price, name, game number, URL, ticket_ID (PK)
+Scratchers
+	name, prizes, odds, winners, total winners, remaining
+Link_Pic
+	Picture, ticket_ID
+
+View - Scratcher_EV
+	price, name, URL, EV, Image, [Maybe:] prizes, total, winners
