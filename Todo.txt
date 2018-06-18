@@ -3,6 +3,8 @@ Part 2 - EV calc and optimization
 
 Branch - Texting
 
+Part 2.5 Python Error logging and handling
+
 Part 3 - App!
 	Kivy?
 

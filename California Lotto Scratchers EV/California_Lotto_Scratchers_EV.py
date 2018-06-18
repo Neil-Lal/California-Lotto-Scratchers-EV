@@ -18,6 +18,7 @@ websites = ["http://www.calottery.com/play/scratchers-games/$1-scratchers",
             "http://www.calottery.com/play/scratchers-games/$20-scratchers",
             "http://www.calottery.com/play/scratchers-games/$30-scratchers"]
 PK_ID = 0
+date = datetime.now().strftime("%Y-%m-%d %H:%M")
 
 ## Connect to MSSQL server and send data
     # Takes in list of pandas dataframes and table to insert into
@@ -31,11 +32,8 @@ def toSQL(frame,table_name):
 def grabPK():
     engine = sqlalchemy.create_engine('mssql+pyodbc://DESKTOP-L0JOFBL\TOPSDATA_ME/topsdata_CalLotto?driver=SQL+Server')
     con = engine.connect()
-    r = con.execute('SELECT MAX(Ticket_ID) FROM Scratchers_Prices')
-    if isinstance(r,int):
-        return r
-    else:
-        return 0
+    r = con.execute('SELECT MAX(Ticket_ID)+1 FROM Scratchers_Prices')
+    return r.fetchone()[0]
 PK_ID = grabPK()
 
 ## Retrieve Data from Website
@@ -70,8 +68,8 @@ def scrapper(websites,PK_ID):
                 img = tick_img[0]['src']
             else:
                 img = ''
-                print("NO IMAGE")
-            ticket_ID = PK_ID + 1
+               
+            ticket_ID = PK_ID
             keys.append(ticket_ID)
             PK_ID += 1
             rows = {'price': price,'url': url, 'img' : img, 'Ticket_ID': ticket_ID}
@@ -92,7 +90,7 @@ def scrapper(websites,PK_ID):
             cells = table_row.findAll('td')
 
             if len(cells) > 0:
-                date = datetime.now().strftime("%Y-%m-%d %H:%M")
+                
                 prizes = list(cells[0].stripped_strings)[0].replace(',','') 
                 odds = list(cells[1].stripped_strings)[0].replace(',','')
                 totalWinners = list(cells[2].stripped_strings)[0].replace(',','')
