@@ -1,9 +1,11 @@
 Part 2 - EV calc and optimization
 	*Store EV in SQL (view)
+CHECK MY EV CALCS!!!!!!!!!!!!!!!!!
 
 Branch - Texting
 
 Part 2.5 Python Error logging and handling
+	Worried about Prizes column...what if they change the name from ticket to tickets?
 
 Part 3 - App!
 	Kivy?

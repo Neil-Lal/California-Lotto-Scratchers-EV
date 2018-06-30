@@ -9,7 +9,6 @@ from random import randint
 
 ## Variables
     # Webpage to scrape
-#websites = ["http://www.calottery.com/Play/Scratchers-games/$30-Scratchers/bonus-play-millions-1313"]
 websites = ["http://www.calottery.com/play/scratchers-games/$1-scratchers",
             "http://www.calottery.com/play/scratchers-games/$2-scratchers",
             "http://www.calottery.com/play/scratchers-games/$3-scratchers",
@@ -72,6 +71,7 @@ def scrapper(websites,PK_ID):
             ticket_ID = PK_ID
             keys.append(ticket_ID)
             PK_ID += 1
+            # Build scratcher prices frame
             rows = {'price': price,'url': url, 'img' : img, 'Ticket_ID': ticket_ID}
             tickets.append(rows)
         sleep(randint(1,2))
@@ -91,13 +91,24 @@ def scrapper(websites,PK_ID):
 
             if len(cells) > 0:
                 
-                prizes = list(cells[0].stripped_strings)[0].replace(',','') 
+                prizes = list(cells[0].stripped_strings)[0].replace(',','')
+                # Added incase the website changes Ticket to Tickets by accident or on purpose in the future
+                if prizes == 'Tickets':
+                    prizes = 'Ticket'
+                if prizes != 'Ticket':
+                    prizes = prizes[1:]
                 odds = list(cells[1].stripped_strings)[0].replace(',','')
                 totalWinners = list(cells[2].stripped_strings)[0].replace(',','')
                 prizesClaimed = list(cells[3].stripped_strings)[0].replace(',','')
-                prizesAvailable = list(cells[4].stripped_strings)[0].replace(',','')
-
-                rows = {'Ticket_ID': key, 'Extract_Date': date,'Ticket_name': name, 'Prizes': prizes, 'Odds': odds, 'Total_winners': totalWinners, 'Prizes_claimed': prizesClaimed, 'Prizes_available': prizesAvailable}
+                prizesAvailable = list(cells[4].stripped_strings)[0].replace(',','')              
+                #add some calculated columns
+                total_tickets = int(odds)*int(totalWinners)
+                prob = 1 / int(odds)
+                oldEV = ''
+                if prizes != 'Ticket':
+                    oldEV = prob*int(prizes)
+                # Build Scratchers Data frame
+                rows = {'Old_EV': oldEV,'Prob': prob,'Total_Tickets': total_tickets, 'Ticket_ID': key, 'Extract_Date': date,'Ticket_name': name, 'Prizes': prizes, 'Odds': odds, 'Total_winners': totalWinners, 'Prizes_claimed': prizesClaimed, 'Prizes_available': prizesAvailable}
                 prizeList.append(rows)
         
         framesScratchers.append(pd.DataFrame(prizeList))
